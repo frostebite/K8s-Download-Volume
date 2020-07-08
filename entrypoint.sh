@@ -22,7 +22,7 @@ spec:
         - name: FTP_USER_PASS
           value: test
 EOF
-kubectl port-forward jobs/ftpjob 21:21-$GITHUB_SHA & 
+kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
 lftp -u test -p test
 sleep 5
 lftp cat
