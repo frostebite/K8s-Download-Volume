@@ -13,6 +13,6 @@ spec:
   template:
     spec:
       containers:
-      - name: FTPServer
+      - name: ftpserver
         image: stilliard/pure-ftpd
 EOF
