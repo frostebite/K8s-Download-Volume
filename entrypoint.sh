@@ -12,6 +12,7 @@ metadata:
 spec:
   template:
     spec:
+      restartPolicy: Never
       containers:
       - name: ftpserver
         image: stilliard/pure-ftpd
