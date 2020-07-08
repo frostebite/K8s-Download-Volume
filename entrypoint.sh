@@ -16,6 +16,11 @@ spec:
       containers:
       - name: ftpserver
         image: stilliard/pure-ftpd
+        env:
+        - name: FTP_USER_NAME
+          value: test
+        - name: FTP_USER_PASS
+          value: test
 EOF
 kubectl port-forward jobs/ftpjob 21:21 > /dev/null & 
 lftp -u test -p test
