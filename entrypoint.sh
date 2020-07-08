@@ -17,5 +17,5 @@ spec:
       - name: ftpserver
         image: stilliard/pure-ftpd
 EOF
-kubectl port-forward jobs/ftpjob 21:21 > /dev/null 2>&1 & 
+kubectl port-forward jobs/ftpjob 21:21 > /dev/null & 
 lftp -u test -p test
