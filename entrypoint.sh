@@ -8,7 +8,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: FTPJOB
+  name: ftpjob
 spec:
   template:
     spec:
