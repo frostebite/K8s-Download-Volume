@@ -10,6 +10,13 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  SA_EMAIL: githubactionkey@unitykubernetesbuilder.iam.gserviceaccount.com
+  GKE_ZONE: 'us-central1-c'
+  GKE_REGION: 'us-central1'
+  GKE_PROJECT: 'unitykubernetesbuilder'
+  GKE_CLUSTER: 'cluster-1'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -21,12 +28,16 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: KinD (Kubernetes in Docker) Action
-      uses: engineerd/setup-kind@v0.4.0
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '288.0.0'
+        service_account_email: ${{ secrets.SA_EMAIL }}
+        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+    - run: |
+        gcloud container clusters get-credentials $GKE_CLUSTER \
+          --zone $GKE_ZONE --project $GKE_PROJECT
+        # run a command to get access-token
+        kubectl version
     - run: cp $HOME/.kube/config ./kubeconfig
     - uses: ./
       env: 
