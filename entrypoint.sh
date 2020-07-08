@@ -26,5 +26,5 @@ kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=
 kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
 lftp -u test -p test
 lftp -c put kubeconfig
-lftp -c cat
+lftp -c ls
 echo 'test'
