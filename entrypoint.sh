@@ -17,5 +17,5 @@ spec:
       - name: ftpserver
         image: stilliard/pure-ftpd
 EOF
-
-kubectl port-forward jobs/ftpjob 7000:7000
+sudo apt install lftp
+kubectl port-forward jobs/ftpjob 21:21
