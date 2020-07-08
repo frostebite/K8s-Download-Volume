@@ -22,6 +22,7 @@ spec:
         - name: FTP_USER_PASS
           value: test
 EOF
+kubectl wait --for=condition=ready jobs/ftpjob-$GITHUB_SHA --timeout=60s
 kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
 lftp -u test -p test
 sleep 5
