@@ -41,4 +41,4 @@ jobs:
         cp $HOME/.kube/config ./kubeconfig
     - uses: ./
       env: 
-        KUBECONFIG: $GITHUB_WORKSPACE/kubeconfig 
+        KUBECONFIG: ${GITHUB_WORKSPACE}/kubeconfig 
