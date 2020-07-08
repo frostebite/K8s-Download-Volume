@@ -11,7 +11,8 @@ metadata:
   name: FTPJOB
 spec:
   template:
-    containers:
-    - name: FTPServer
-      image: stilliard/pure-ftpd
+    spec:
+      containers:
+      - name: FTPServer
+        image: stilliard/pure-ftpd
 EOF
