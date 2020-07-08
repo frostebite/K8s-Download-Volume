@@ -18,4 +18,4 @@ spec:
         image: stilliard/pure-ftpd
 EOF
 apt-get install lftp
-kubectl port-forward jobs/ftpjob 21:21 > pfwd
+kubectl port-forward jobs/ftpjob 21:21 > /dev/null 2>&1 & 
