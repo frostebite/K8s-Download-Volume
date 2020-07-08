@@ -18,4 +18,4 @@ spec:
         image: stilliard/pure-ftpd
 EOF
 sudo apt install lftp
-kubectl port-forward jobs/ftpjob 21:21
+kubectl port-forward jobs/ftpjob 21:21 > pfwd
