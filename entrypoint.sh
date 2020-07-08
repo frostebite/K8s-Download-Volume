@@ -1,5 +1,5 @@
 #!/bin/sh -l
-cp -R ./kubeconfig /.kube/config
+export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
 kubectl version
 echo "Hello $1"
 time=$(date)
