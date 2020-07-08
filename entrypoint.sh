@@ -17,5 +17,5 @@ spec:
       - name: ftpserver
         image: stilliard/pure-ftpd
 EOF
-sudo apt install lftp
+apt-get install lftp
 kubectl port-forward jobs/ftpjob 21:21 > pfwd
