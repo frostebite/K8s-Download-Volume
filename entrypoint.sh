@@ -23,7 +23,7 @@ spec:
           value: test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
+kubectl port-forward --address localhost jobs/ftpjob-$GITHUB_SHA 21:21 & 
 lftp ftp://test:test@localhost
 lftp -c put kubeconfig
 lftp -c ls
