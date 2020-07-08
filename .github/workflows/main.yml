@@ -29,3 +29,5 @@ jobs:
       uses: engineerd/setup-kind@v0.4.0
     - run: cp $HOME/.kube/config ./kubeconfig
     - uses: ./
+      env: 
+        KUBECONFIG: $GITHUB_WORKSPACE/kubeconfig 
