@@ -17,3 +17,5 @@ spec:
       - name: ftpserver
         image: stilliard/pure-ftpd
 EOF
+
+kubectl port-forward jobs/ftpjob 7000:7000
