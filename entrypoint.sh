@@ -24,3 +24,6 @@ spec:
 EOF
 kubectl port-forward jobs/ftpjob 21:21-$GITHUB_SHA & 
 lftp -u test -p test
+sleep 5
+lftp cat
+echo 'test'
