@@ -27,5 +27,5 @@ jobs:
       run: echo Hello, world!
     - name: KinD (Kubernetes in Docker) Action
       uses: engineerd/setup-kind@v0.4.0
-    - run: cp $KUBECONFIG ./kubeconfig
+    - run: cp $KUBECONFIG ./kubeconfig/
     - uses: ./
