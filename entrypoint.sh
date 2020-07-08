@@ -1,8 +1,5 @@
 #!/bin/sh -l
 kubectl version
-echo "Hello $1"
-time=$(date)
-echo ::set-output name=time::$time
 
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
@@ -23,7 +20,7 @@ spec:
           value: test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl port-forward --address localhost jobs/ftpjob-$GITHUB_SHA 21:21 & 
-lftp ftp://test:test@localhost
+kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
+lftp ftp://test:test@127.0.0.1
 lftp -c put kubeconfig
 lftp -c ls
