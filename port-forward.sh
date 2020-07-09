@@ -1,1 +1,0 @@
-kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
