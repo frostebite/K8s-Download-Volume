@@ -12,14 +12,12 @@ spec:
       restartPolicy: Never
       containers:
       - name: ftpserver
-        image: stilliard/pure-ftpd
+        image: atmoz/sftp
         env:
-        - name: FTP_USER_NAME
-          value: test
-        - name: FTP_USER_PASS
-          value: test
+        - name: SFTP_USERS
+          value: test:test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
+kubectl port-forward jobs/ftpjob-$GITHUB_SHA 22:22 & 
 sleep 5
-sftp test:test@127.0.0.1:21
+sftp test:test@127.0.0.1:22
