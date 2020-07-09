@@ -26,7 +26,7 @@ if [[ -v $3 ]]; then
   echo $3
 fi
 sleep 5
-kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60
+kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
