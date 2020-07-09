@@ -21,6 +21,10 @@ spec:
           mountPath: /data
 EOF
 
+if [[ -z $kubeconfig64 ]]; then
+  echo $kubeconfig64
+fi
+
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update

@@ -1,6 +1,10 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
+  kubeconfig64:
+    description: 'Base64 encoded kubeconfig, either this or the KUBECONFIG environment variable is required'
+    required: false
+    default: ''
   pv:  # id of input
     description: 'Kubernetes PV to mount'
     required: true
@@ -15,3 +19,4 @@ runs:
   args:
     - ${{ inputs.pv }}
     - ${{ inputs.sourcePath }}
+    - ${{ inputs.kubeconfig64 }}
