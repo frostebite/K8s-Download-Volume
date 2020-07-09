@@ -22,8 +22,8 @@ spec:
           mountPath: /data
 EOF
 
-if [[ -z $kubeconfig64 ]]; then
-  echo $kubeconfig64
+if [[ -z $3 ]]; then
+  echo $3
 fi
 sleep 5
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60
