@@ -26,6 +26,7 @@ kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
+kubectl exec jobs/ftpjob-$GITHUB_SHA -- stat /output.zip
 pods=$(kubectl get pods --selector=job-name=ftpjob-$GITHUB_SHA --output=jsonpath='{.items[*].metadata.name}')
 kubectl cp $pods:output.zip $PWD/output.zip
 ls
