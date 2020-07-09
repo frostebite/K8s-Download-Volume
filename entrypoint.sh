@@ -6,7 +6,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: ftpjob-$GITHUB_SHA
-spec:$
+spec:
   template:
     spec:
       restartPolicy: Never
