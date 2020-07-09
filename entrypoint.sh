@@ -6,7 +6,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: ftpjob-$GITHUB_SHA
-spec:
+spec:$
   template:
     spec:
       restartPolicy: Never
@@ -20,7 +20,7 @@ spec:
           value: test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
+kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21
 sleep 5
 lftp -c open -u test,test -p 21 127.0.0.1
 lftp -c ls
