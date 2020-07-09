@@ -9,14 +9,9 @@ inputs:
     description: 'Folder to download from the PV'
     required: false
     default: ''
-  destinationPath:  # id of input
-    description: 'Folder to download the contents into'
-    required: false
-    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.pv }}
     - ${{ inputs.sourcePath }}
-    - ${{ inputs.destinationPath }}
