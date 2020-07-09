@@ -42,7 +42,7 @@ jobs:
     - uses: ./
       with:
         pv: unity-builder-pvc-24614076ab72cbb6e194b819695458f9a8a2cd8e
-        sourcePath: something/
+        sourcePath: repo/
         destinationPath: something/
       env: 
         KUBECONFIG: ${{ github.workspace }}/kubeconfig 
