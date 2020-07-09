@@ -27,5 +27,7 @@ kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r output.zip /data/$2
+kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
+kubectl cp /output.zip jobs/ftpjob-$GITHUB_SHA
+ls
 kubectl delete jobs/ftpjob-$GITHUB_SHA
