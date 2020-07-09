@@ -12,11 +12,11 @@ spec:
       restartPolicy: Never
       containers:
       - name: ftpserver
-        image: stilliard/pure-ftpd
+        image: mikatux/ftps-server
         env:
-        - name: FTP_USER_NAME
+        - name: USER
           value: test
-        - name: FTP_USER_PASS
+        - name: PASSWORD
           value: test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
@@ -25,4 +25,4 @@ sleep 5
 lftp -u test,test 127.0.0.1:21
 lftp -c ls
 
-kubectl delete ftpjob-$GITHUB_SHA
+kubectl delete jobs/ftpjob-$GITHUB_SHA
