@@ -1,6 +1,8 @@
 #!/bin/sh -l
 kubectl version
-
+echo $1
+echo $2
+echo $3
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job

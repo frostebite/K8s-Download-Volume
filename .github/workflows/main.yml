@@ -40,5 +40,9 @@ jobs:
         kubectl version
         cp $HOME/.kube/config ./kubeconfig
     - uses: ./
+      with:
+        pv: test
+        sourcePath: something/
+        destinationPath: something/
       env: 
         KUBECONFIG: ${{ github.workspace }}/kubeconfig 

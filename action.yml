@@ -1,15 +1,22 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  pv:  # id of input
+    description: 'Kubernetes PV to mount'
     required: true
-    default: 'John'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: ''
+  sourcePath:  # id of input
+    description: 'Folder to download from the PV'
+    required: false
+    default: ''
+  destinationPath:  # id of input
+    description: 'Folder to download the contents into'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.pv }}
+    - ${{ inputs.sourcePath }}
+    - ${{ inputs.destinationPath }}
