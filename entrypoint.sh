@@ -24,3 +24,5 @@ kubectl port-forward jobs/ftpjob-$GITHUB_SHA 22:22 &
 sleep 5
 lftp ftp://test:test@127.0.0.1:22
 lftp -c ls
+
+kubectl delete ftpjob-$GITHUB_SHA
