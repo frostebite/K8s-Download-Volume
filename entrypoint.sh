@@ -26,13 +26,14 @@ if [[ -z $kubeconfig64 ]]; then
   echo $kubeconfig64
 fi
 sleep 5
-kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
+kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- stat /output.zip
 pods=$(kubectl get pods --selector=job-name=ftpjob-$GITHUB_SHA --output=jsonpath='{.items[*].metadata.name}')
+kubectl get pod $pods
 kubectl cp $pods:output.zip $PWD/output.zip
 ls
 kubectl delete jobs/ftpjob-$GITHUB_SHA
