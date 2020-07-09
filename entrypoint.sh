@@ -1,8 +1,5 @@
 #!/bin/sh -l
 kubectl version
-echo $1
-echo $2
-echo $3
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -28,6 +25,6 @@ kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
-kubectl cp jobs/ftpjob-$GITHUB_SHA:/output.zip 
+kubectl cp jobs/ftpjob-$GITHUB_SHA:/output.zip $pwd
 ls
 kubectl delete jobs/ftpjob-$GITHUB_SHA
