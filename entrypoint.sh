@@ -20,9 +20,9 @@ spec:
           value: test
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl port-forward jobs/ftpjob-$GITHUB_SHA 22:22 & 
+kubectl port-forward jobs/ftpjob-$GITHUB_SHA 21:21 & 
 sleep 5
-lftp ftp://test:test@127.0.0.1:22
+lftp -u test,test 127.0.0.1:21
 lftp -c ls
 
 kubectl delete ftpjob-$GITHUB_SHA
