@@ -13,7 +13,7 @@ spec:
     spec:
       volumes:
       - name: data
-        persisteentVolumeClaim:
+        persistentVolumeClaim:
           claimName: $1
       restartPolicy: Never
       containers:
