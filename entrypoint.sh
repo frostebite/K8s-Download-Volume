@@ -22,7 +22,7 @@ spec:
           mountPath: /data
 EOF
 
-if [[ -z $3 ]]; then
+if [[ -v $3 ]]; then
   echo $3
 fi
 sleep 5
