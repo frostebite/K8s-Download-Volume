@@ -13,10 +13,7 @@ spec:
       containers:
       - name: ftpserver
         image: alpine:latest
-        command:
-         'bin/bash'
-         '-c'
-         'tail -f /dev/null'
+        command: bin/bash -c tail -f /dev/null
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls
