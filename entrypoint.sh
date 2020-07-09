@@ -24,5 +24,5 @@ spec:
           mountPath: /data
 EOF
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data
+kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl delete jobs/ftpjob-$GITHUB_SHA
