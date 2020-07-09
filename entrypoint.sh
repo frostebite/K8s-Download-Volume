@@ -20,11 +20,12 @@ spec:
         - name: data
           mountPath: /data
 EOF
+
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
-kubectl cp jobs/ftpjob-$GITHUB_SHA:/output.zip $PWD
+kubectl cp $(pod -l job-name=ftpjob-$GITHUB_SHA):/output.zip $PWD
 ls
 kubectl delete jobs/ftpjob-$GITHUB_SHA
