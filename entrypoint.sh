@@ -1,5 +1,6 @@
 #!/bin/sh -l
 kubectl version
+sleep 10
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -21,10 +22,10 @@ spec:
           mountPath: /data
 EOF
 
-if [[ -z $kubeconfig64 ]]; then
-  echo $kubeconfig64
+if [[ -v $3 ]]; then
+  echo $3
 fi
-
+sleep 5
 kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
@@ -32,6 +33,7 @@ kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
 kubectl exec jobs/ftpjob-$GITHUB_SHA -- stat /output.zip
 pods=$(kubectl get pods --selector=job-name=ftpjob-$GITHUB_SHA --output=jsonpath='{.items[*].metadata.name}')
+kubectl describe pod $pods
 kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip
 ls
