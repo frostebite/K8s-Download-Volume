@@ -35,6 +35,6 @@ kubectl exec jobs/ftpjob-$GITHUB_SHA -- stat /output.zip
 pods=$(kubectl get pods --selector=job-name=ftpjob-$GITHUB_SHA --output=jsonpath='{.items[*].metadata.name}')
 kubectl describe pod $pods
 kubectl cp $pods:output.zip $PWD/output.zip
-unzip $PWD/output.zip
+unzip $PWD/output.zip -d $PWD
 ls
 kubectl delete jobs/ftpjob-$GITHUB_SHA
