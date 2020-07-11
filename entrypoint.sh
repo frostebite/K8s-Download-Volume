@@ -29,7 +29,7 @@ if [[ -v $3 ]]; then
 fi
 sleep 5
 kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=60s
-kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/repo
+kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$2
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get update
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get install zip unzip
 kubectl exec jobs/$DOWNLOAD_NAME -- zip -r /output.zip /data/$2
