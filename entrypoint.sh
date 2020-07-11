@@ -1,11 +1,13 @@
 #!/bin/sh -l
 kubectl version
 sleep 10
+DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
+DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ftpjob-$GITHUB_SHA
+  name: $DOWNLOAD_NAME
 spec:
   template:
     spec:
@@ -15,7 +17,7 @@ spec:
           claimName: $1
       restartPolicy: Never
       containers:
-      - name: ftpserver
+      - name: download-pv
         image: nginx:latest
         volumeMounts:
         - name: data
@@ -26,15 +28,15 @@ if [[ -v $3 ]]; then
   echo $3
 fi
 sleep 5
-kubectl wait --for=condition=ready pod -l job-name=ftpjob-$GITHUB_SHA --timeout=60s
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- ls /data/repo
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get update
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- apt-get install zip unzip
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- zip -r /output.zip /data/$2
-kubectl exec jobs/ftpjob-$GITHUB_SHA -- stat /output.zip
-pods=$(kubectl get pods --selector=job-name=ftpjob-$GITHUB_SHA --output=jsonpath='{.items[*].metadata.name}')
+kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=60s
+kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/repo
+kubectl exec jobs/$DOWNLOAD_NAME -- apt-get update
+kubectl exec jobs/$DOWNLOAD_NAME -- apt-get install zip unzip
+kubectl exec jobs/$DOWNLOAD_NAME -- zip -r /output.zip /data/$2
+kubectl exec jobs/$DOWNLOAD_NAME -- stat /output.zip
+pods=$(kubectl get pods --selector=job-name=$DOWNLOAD_NAME --output=jsonpath='{.items[*].metadata.name}')
 kubectl describe pod $pods
 kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD
 ls
-kubectl delete jobs/ftpjob-$GITHUB_SHA
+kubectl delete jobs/$DOWNLOAD_NAME
