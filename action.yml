@@ -13,10 +13,15 @@ inputs:
     description: 'Folder to download from the PV'
     required: false
     default: ''
+  timeout:
+    description: 'number of seconds to wait when a pod is unschedulable'
+    required: false
+    default: '260'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.pv }}
     - ${{ inputs.sourcePath }}
+    - ${{ inputs.timeout }}
     - ${{ inputs.kubeconfig64 }}
