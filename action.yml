@@ -1,11 +1,11 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  kubeconfig64:
+  kubernetesBase64Config:
     description: 'Base64 encoded kubeconfig, either this or the KUBECONFIG environment variable is required'
     required: false
     default: ''
-  pv:  # id of input
+  volume:  # id of input
     description: 'Kubernetes PV to mount'
     required: true
     default: ''
@@ -21,7 +21,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.pv }}
+    - ${{ inputs.volume }}
     - ${{ inputs.sourcePath }}
     - ${{ inputs.timeout }}
-    - ${{ inputs.kubeconfig64 }}
+    - ${{ inputs.kubernetesBase64Config }}

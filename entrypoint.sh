@@ -25,7 +25,7 @@ spec:
 EOF
 
 if [[ -v $4 ]]; then
-  echo $4
+  echo $4 | base64 -d > ~/.kube/output
 fi
 
 sleep 5

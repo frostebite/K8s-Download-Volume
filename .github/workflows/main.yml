@@ -39,9 +39,14 @@ jobs:
         # run a command to get access-token
         kubectl version
         cp $HOME/.kube/config ./kubeconfig
+    - uses: frostebite/File-To-Base64@master
+      id: read-kubernetes-config
+      with:
+        filePath: ~/.kube/config
     - uses: ./
       with:
-        pv: unity-builder-pvc-24614076ab72cbb6e194b819695458f9a8a2cd8e
+        kubernetesBase64Config: ${{ steps.read-kubernetes-config.outputs.base64 }}
+        volume: unity-builder-pvc-24614076ab72cbb6e194b819695458f9a8a2cd8e
         sourcePath: repo/
       env: 
         KUBECONFIG: ${{ github.workspace }}/kubeconfig 
