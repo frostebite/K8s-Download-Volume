@@ -1,7 +1,7 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  kubernetesBase64Config:
+  kubeConfig:
     description: 'Base64 encoded kubeconfig, either this or the KUBECONFIG environment variable is required'
     required: false
     default: ''
@@ -24,4 +24,4 @@ runs:
     - ${{ inputs.volume }}
     - ${{ inputs.sourcePath }}
     - ${{ inputs.timeout }}
-    - ${{ inputs.kubernetesBase64Config }}
+    - ${{ inputs.kubeConfig }}
