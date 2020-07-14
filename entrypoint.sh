@@ -1,13 +1,14 @@
 #!/bin/sh -l
-kubectl version
 sleep 10
 DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
 DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 
 if [[ -v $4 ]]; then
-  mkdir -p ~/.kube/output
+  mkdir -p ~/.kube
   echo $4 | base64 -d > ~/.kube/output
 fi
+
+kubectl version
 
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
