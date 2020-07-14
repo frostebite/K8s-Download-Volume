@@ -33,20 +33,16 @@ jobs:
         version: '288.0.0'
         service_account_email: ${{ secrets.SA_EMAIL }}
         service_account_key: ${{ secrets.GCLOUD_AUTH }}
-    - run: |
+    - id: read-k8s-config
+      run: |
         gcloud container clusters get-credentials $GKE_CLUSTER \
           --zone $GKE_ZONE --project $GKE_PROJECT
         # run a command to get access-token
         kubectl version
-        cp $HOME/.kube/config ./kubeconfig
-    - uses: frostebite/File-To-Base64@master
-      id: read-kubernetes-config
-      with:
-        filePath: ~/.kube/config
+        kubeConfig=$(cat ~/.kube/config | base64 -w0)
+        echo "::set-output name=kubeConfig::$kubeConfig"
     - uses: ./
       with:
-        kubernetesBase64Config: ${{ steps.read-kubernetes-config.outputs.base64 }}
+        kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
         volume: unity-builder-pvc-24614076ab72cbb6e194b819695458f9a8a2cd8e
         sourcePath: repo/
-      env: 
-        KUBECONFIG: ${{ github.workspace }}/kubeconfig 
