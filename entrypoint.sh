@@ -3,6 +3,12 @@ kubectl version
 sleep 10
 DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
 DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
+
+if [[ -v $4 ]]; then
+  mkdir -p ~/.kube/output
+  echo $4 | base64 -d > ~/.kube/output
+fi
+
 cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -23,10 +29,6 @@ spec:
         - name: data
           mountPath: /data
 EOF
-
-if [[ -v $4 ]]; then
-  echo $4 | base64 -d > ~/.kube/output
-fi
 
 sleep 5
 kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$3s
