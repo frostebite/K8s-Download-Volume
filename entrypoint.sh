@@ -3,8 +3,11 @@ sleep 10
 DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
 DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 if [[ -v $4 ]]; then
+  echo "Applied kubeConfig"
   mkdir -p ~/.kube
+  echo "Applied kubeConfig"
   echo $4 | base64 -d > ~/.kube/config
+  echo "Applied kubeConfig"
   export KUBECONFIG="~/.kube/config"
   echo "Applied kubeConfig"
 fi
