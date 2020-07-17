@@ -1,6 +1,8 @@
 name: 'Kubernetes Download Volume'
 description: 'This action makes it easy to download any folder on a Persistent Volume (Claim) to the local filesystem.'
-icon: 'arrow-down'
+branding:
+  icon: 'arrow-down'
+  color: 'blue'
 inputs:
   kubeConfig:
     description: 'Base64 encoded kubeconfig, either this or the KUBECONFIG environment variable is required'
