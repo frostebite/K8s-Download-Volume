@@ -15,15 +15,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: $DOWNLOAD_NAME-pvc
 spec:
-  template:
-    spec:
-      accessModes:
-        ['ReadWriteOnce']
-      volumeMode:
-        'Filesystem'
-      resources:
-        requests:
-          storage: '1Gi'
+  accessModes:
+    ['ReadWriteOnce']
+  volumeMode:
+    'Filesystem'
+  resources:
+    requests:
+      storage: '1Gi'
 EOF
 
 cat <<EOF | kubectl apply -f -
