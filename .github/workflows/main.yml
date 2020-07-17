@@ -74,7 +74,7 @@ jobs:
               containers:
               - name: download-pv
                 image: alpine:latest
-                command: '/bin/sh'
+                command: ['/bin/sh']
                 args:
                   ['-c', 'echo "test" > /data/repo/test.txt']
                 volumeMounts:

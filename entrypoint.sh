@@ -25,6 +25,9 @@ spec:
       containers:
       - name: download-pv
         image: nginx:latest
+        command: ['/bin/sh']
+        args:
+          ['-c', 'sleep 140s']
         volumeMounts:
         - name: data
           mountPath: /data
