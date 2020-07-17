@@ -58,6 +58,7 @@ jobs:
             requests:
               storage: '1Gi'
         EOF
+        sleep 10s
         cat <<EOF | kubectl apply -f -
         apiVersion: batch/v1
         kind: Job
