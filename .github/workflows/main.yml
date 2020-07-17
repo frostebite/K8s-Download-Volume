@@ -83,7 +83,7 @@ jobs:
                   mountPath: /data
               restartPolicy: Never
         EOF
-        kubectl wait --for=condition=complete --timeout=20s job/$PVC_ID-populate
+        kubectl wait --for=condition=complete --timeout=120s job/$PVC_ID-populate
     - uses: ./
       with:
         kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
