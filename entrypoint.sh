@@ -58,3 +58,4 @@ kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD
 ls
 kubectl delete jobs/$DOWNLOAD_NAME
+kubectl delete pvc/$DOWNLOAD_NAME-pvc
