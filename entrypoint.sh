@@ -39,10 +39,10 @@ kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get update
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get install zip unzip
 kubectl exec jobs/$DOWNLOAD_NAME -- cd /data/$3 && zip -r ./output.zip ./*
-kubectl exec jobs/$DOWNLOAD_NAME -- stat /data/$3/output.zip
+kubectl exec jobs/$DOWNLOAD_NAME -- stat /data/$3output.zip
 pods=$(kubectl get pods --selector=job-name=$DOWNLOAD_NAME --output=jsonpath='{.items[*].metadata.name}')
 kubectl describe pod $pods
-kubectl cp $pods:/data/$3/output.zip $PWD/output.zip
+kubectl cp $pods:/data/$3output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD
 ls
 kubectl delete jobs/$DOWNLOAD_NAME
