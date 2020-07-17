@@ -5,9 +5,7 @@ DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 
 mkdir -p ~/.kube
 echo $1 | base64 -d > ~/.kube/config
-export KUBECONFIG="~/.kube/config"
 echo "Applied kubeConfig"
-cat ~/.kube/config
 
 kubectl version
 
