@@ -81,6 +81,7 @@ jobs:
                 - name: data
                   mountPath: /data
         EOF
+        kubectl wait --for=condition=complete pod -l job-name=$PVC_ID-populate --timeout=$20s
     - uses: ./
       with:
         kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
