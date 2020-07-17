@@ -58,10 +58,33 @@ jobs:
             requests:
               storage: '1Gi'
         EOF
+        cat <<EOF | kubectl apply -f -
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          name: $PVC_ID-populate
+        spec:
+          template:
+            spec:
+              volumes:
+              - name: data
+                persistentVolumeClaim:
+                  claimName: $2
+              restartPolicy: Never
+              containers:
+              - name: download-pv
+                image: alpine:latest
+                command: '/bin/sh'
+                args:
+                  ['-c', 'echo "test" > /data/repo/test.txt']
+                volumeMounts:
+                - name: data
+                  mountPath: /data
+        EOF
     - uses: ./
       with:
         kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
         volume: ${{ steps.read-k8s-config.outputs.PVC_ID }}
         sourcePath: repo/
     - run: |
-        kubectl delete pvc/$PVC_ID
+        kubectl delete PVC/${{ steps.read-k8s-config.outputs.PVC_ID }}
