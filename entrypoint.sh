@@ -4,7 +4,7 @@ DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
 DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 
 mkdir -p ~/.kube
-echo $4 | base64 -d > ~/.kube/config
+echo $1 | base64 -d > ~/.kube/config
 export KUBECONFIG="~/.kube/config"
 echo "Applied kubeConfig"
 
@@ -21,7 +21,7 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: $1
+          claimName: $2
       restartPolicy: Never
       containers:
       - name: download-pv
@@ -32,11 +32,11 @@ spec:
 EOF
 
 sleep 5
-kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$3s
-kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$2
+kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$4s
+kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get update
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get install zip unzip
-kubectl exec jobs/$DOWNLOAD_NAME -- zip -r /output.zip /data/$2
+kubectl exec jobs/$DOWNLOAD_NAME -- zip -r /output.zip /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- stat /output.zip
 pods=$(kubectl get pods --selector=job-name=$DOWNLOAD_NAME --output=jsonpath='{.items[*].metadata.name}')
 kubectl describe pod $pods

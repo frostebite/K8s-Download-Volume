@@ -21,7 +21,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.kubeConfig }}
     - ${{ inputs.volume }}
     - ${{ inputs.sourcePath }}
     - ${{ inputs.timeout }}
-    - ${{ inputs.kubeConfig }}
