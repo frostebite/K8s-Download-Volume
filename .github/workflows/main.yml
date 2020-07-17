@@ -69,7 +69,7 @@ jobs:
               volumes:
               - name: data
                 persistentVolumeClaim:
-                  claimName: $2
+                  claimName: $PVC_ID
               restartPolicy: Never
               containers:
               - name: download-pv
