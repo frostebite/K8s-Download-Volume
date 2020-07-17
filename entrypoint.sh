@@ -2,7 +2,6 @@
 sleep 10
 DOWNLOAD_ID=$(cat /proc/sys/kernel/random/uuid)
 DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
-echo "::add-mask::$4"
 if [[ -v $4 ]]; then
   mkdir -p ~/.kube
   echo $4 | base64 -d > ~/.kube/config
