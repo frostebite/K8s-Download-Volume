@@ -77,7 +77,7 @@ jobs:
                 image: alpine:latest
                 command: ['/bin/sh']
                 args:
-                  ['-c', 'mkdir -p /data/repo;', 'echo "test" > /data/repo/test.txt']
+                  ['-c', 'mkdir -p /data/repo; echo "test" > /data/repo/test.txt']
                 volumeMounts:
                 - name: data
                   mountPath: /data
