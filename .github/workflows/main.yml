@@ -90,6 +90,6 @@ jobs:
         volume: ${{ steps.read-k8s-config.outputs.PVC_ID }}
         sourcePath: repo/
     - run: |
-        kubectl delete PVC/${{ steps.read-k8s-config.outputs.PVC_ID }}
+        kubectl delete persistentvolumeclaim/${{ steps.read-k8s-config.outputs.PVC_ID }}
         kubectl delete jobs/$PVC_ID-populate
       if: ${{ always() }}
