@@ -81,6 +81,7 @@ jobs:
                 volumeMounts:
                 - name: data
                   mountPath: /data
+              restartPolicy: Never
         EOF
         kubectl wait --for=condition=complete pod -l job-name=$PVC_ID-populate --timeout=$20s
     - uses: ./
