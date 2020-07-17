@@ -91,3 +91,5 @@ jobs:
         sourcePath: repo/
     - run: |
         kubectl delete PVC/${{ steps.read-k8s-config.outputs.PVC_ID }}
+        kubectl delete jobs/$PVC_ID-populate
+      if: ${{ always() }}
