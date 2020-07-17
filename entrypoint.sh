@@ -10,21 +10,6 @@ echo "Applied kubeConfig"
 kubectl version
 
 cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: $DOWNLOAD_NAME-pvc
-spec:
-  accessModes:
-    ['ReadWriteOnce']
-  volumeMode:
-    'Filesystem'
-  resources:
-    requests:
-      storage: '1Gi'
-EOF
-
-cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -47,6 +32,7 @@ EOF
 
 sleep 5
 kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$4s
+kubectl exec jobs/$DOWNLOAD_NAME -- mkdir -p data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get update
 kubectl exec jobs/$DOWNLOAD_NAME -- apt-get install zip unzip
@@ -58,4 +44,3 @@ kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD
 ls
 kubectl delete jobs/$DOWNLOAD_NAME
-kubectl delete pvc/$DOWNLOAD_NAME-pvc

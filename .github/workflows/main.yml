@@ -40,10 +40,26 @@ jobs:
         # run a command to get access-token
         kubectl version
         kubeConfig=$(cat ~/.kube/config | base64 -w0)
+        PVC_ID=$(cat /proc/sys/kernel/random/uuid)
         echo "::set-output name=kubeConfig::$kubeConfig"
+        echo "::set-output name=PVC_ID::$PVC_ID"
         echo "::add-mask::$kubeConfig"
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: $PVC_ID-pvc
+        spec:
+          accessModes:
+            ['ReadWriteOnce']
+          volumeMode:
+            'Filesystem'
+          resources:
+            requests:
+              storage: '1Gi'
+        EOF
     - uses: ./
       with:
         kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
-        volume: unity-builder-pvc-24614076ab72cbb6e194b819695458f9a8a2cd8e
+        volume: ${{ steps.read-k8s-config.outputs.PVC_ID }}
         sourcePath: repo/
