@@ -48,7 +48,7 @@ jobs:
         apiVersion: v1
         kind: PersistentVolumeClaim
         metadata:
-          name: $PVC_ID-pvc
+          name: $PVC_ID
         spec:
           accessModes:
             ['ReadWriteOnce']
