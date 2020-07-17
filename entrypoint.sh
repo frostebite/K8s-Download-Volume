@@ -10,6 +10,23 @@ echo "Applied kubeConfig"
 kubectl version
 
 cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: $DOWNLOAD_NAME-pvc
+spec:
+  template:
+    spec:
+      accessModes:
+        ['ReadWriteOnce']
+      volumeMode:
+        'Filesystem'
+      resources:
+        requests:
+          storage: '1Gi'
+EOF
+
+cat <<EOF | kubectl apply -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
