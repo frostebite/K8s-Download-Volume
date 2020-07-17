@@ -6,6 +6,7 @@ DOWNLOAD_NAME=download-pv-job-$DOWNLOAD_ID
 if [[ -v $4 ]]; then
   mkdir -p ~/.kube
   echo $4 | base64 -d > ~/.kube/output
+  export KUBECONFIG = ~/.kube/output
 fi
 
 kubectl version
