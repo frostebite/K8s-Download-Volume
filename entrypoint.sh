@@ -24,7 +24,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: download-pv
-        image: nginx:latest
+        image: alpine:latest
         command: ['/bin/sh']
         args:
           ['-c', 'sleep 140s']
