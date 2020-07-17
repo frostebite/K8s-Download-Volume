@@ -63,3 +63,5 @@ jobs:
         kubeConfig: ${{ steps.read-k8s-config.outputs.kubeConfig }}
         volume: ${{ steps.read-k8s-config.outputs.PVC_ID }}
         sourcePath: repo/
+    - run: |
+        kubectl delete pvc/$PVC_ID
