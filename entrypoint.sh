@@ -7,6 +7,7 @@ if [[ -v $4 ]]; then
   mkdir -p ~/.kube
   echo $4 | base64 -d > ~/.kube/config
   export KUBECONFIG="~/.kube/config"
+  echo 'Applied kubeConfig'
 fi
 
 kubectl version
