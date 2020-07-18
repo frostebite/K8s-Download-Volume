@@ -30,6 +30,6 @@ runs:
   args:
     - ${{ inputs.kubeConfig }}
     - ${{ inputs.volume }}
-    - ${{ inputs.sourceFolder }}
-    - ${{ inputs.outputFolder }}
+    - ${{ inputs.sourcePath }}
+    - ${{ inputs.outputPath }}
     - ${{ inputs.timeout }}
