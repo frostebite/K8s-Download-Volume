@@ -12,11 +12,11 @@ inputs:
     description: 'Kubernetes PV to mount'
     required: true
     default: ''
-  sourceFolder:  # id of input
+  sourcePath:  # id of input
     description: 'Folder to download from the PV'
     required: false
     default: ''
-  outputFolder:  # id of input
+  outputPath:  # id of input
     description: 'Folder to download the PV into'
     required: false
     default: 'k8s-volume-download'
