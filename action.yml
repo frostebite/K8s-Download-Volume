@@ -6,16 +6,20 @@ branding:
 inputs:
   kubeConfig:
     description: 'Base64 encoded kubeconfig, either this or the KUBECONFIG environment variable is required'
-    required: false
+    required: true
     default: ''
   volume:  # id of input
     description: 'Kubernetes PV to mount'
     required: true
     default: ''
-  sourcePath:  # id of input
+  sourceFolder:  # id of input
     description: 'Folder to download from the PV'
     required: false
     default: ''
+  outputFolder:  # id of input
+    description: 'Folder to download the PV into'
+    required: false
+    default: 'k8s-volume-download'
   timeout:
     description: 'number of seconds to wait when a pod is unschedulable'
     required: false
@@ -26,5 +30,6 @@ runs:
   args:
     - ${{ inputs.kubeConfig }}
     - ${{ inputs.volume }}
-    - ${{ inputs.sourcePath }}
+    - ${{ inputs.sourceFolder }}
+    - ${{ inputs.outputFolder }}
     - ${{ inputs.timeout }}
