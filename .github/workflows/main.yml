@@ -65,6 +65,8 @@ jobs:
         kind: Job
         metadata:
           name: $PVC_ID-populate
+          labels:
+            app: k8s-download
         spec:
           template:
             spec:
@@ -93,6 +95,6 @@ jobs:
     - run: |
         kubectl delete job/${{ steps.read-k8s-config.outputs.PVC_ID }}-populate
         kubectl delete persistentvolumeclaim/${{ steps.read-k8s-config.outputs.PVC_ID }}
-        kubectl get pods -o json | jq '.items'
-        # gcloud container clusters delete ${{env.GKE_CLUSTER}}
+        pods=$(kubectl get pods -o json | jq '.items | .[].metadata.labels' | jq 'select("app", "k8s-download")')
+        [ -z $pods ] || gcloud container clusters delete ${{env.GKE_CLUSTER}}
       if: ${{ always() }}
