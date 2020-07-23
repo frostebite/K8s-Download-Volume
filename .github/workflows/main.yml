@@ -35,6 +35,8 @@ jobs:
         service_account_key: ${{ secrets.GCLOUD_AUTH }}
     - id: read-k8s-config
       run: |
+        sudo apt-get install jq
+        gcloud container clusters list --format="json" | jq 'contains({name: $GKE_CLUSTER})'
         gcloud container clusters get-credentials $GKE_CLUSTER \
           --zone $GKE_ZONE --project $GKE_PROJECT
         # run a command to get access-token
