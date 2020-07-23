@@ -96,5 +96,5 @@ jobs:
         kubectl delete job/${{ steps.read-k8s-config.outputs.PVC_ID }}-populate
         kubectl delete persistentvolumeclaim/${{ steps.read-k8s-config.outputs.PVC_ID }}
         pods=$(kubectl get pods -o json | jq '.items | .[].metadata.labels' | jq 'select("app", "k8s-download")')
-        [ -z pods ] || gcloud container clusters delete ${{env.GKE_CLUSTER}}
+        [ -z pods ] || gcloud container clusters delete ${{env.GKE_CLUSTER}} --zone $GKE_ZONE --project $GKE_PROJECT
       if: ${{ always() }}
