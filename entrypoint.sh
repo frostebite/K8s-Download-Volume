@@ -14,6 +14,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: $DOWNLOAD_NAME
+  labels:
+    app: k8s-download
 spec:
   template:
     spec:
