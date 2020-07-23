@@ -34,6 +34,8 @@ spec:
 EOF
 
 sleep 5
+echo "SourcePath:/data/"$3
+echo "OutputPath:"$PWD/$4
 kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$5s
 kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- apk update
