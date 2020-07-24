@@ -35,6 +35,7 @@ jobs:
         service_account_key: ${{ secrets.GCLOUD_AUTH }}
     - id: read-k8s-config
       run: |
+        sudo sh -c "curl https://raw.githubusercontent.com/kadwanev/retry/master/retry -o /usr/local/bin/retry && chmod +x /usr/local/bin/retry"
         downloadCluster=$(gcloud container clusters list --project $GKE_PROJECT --format="json" | jq '.[] | select(.name == "${{env.GKE_CLUSTER}}")')     
         if [ -z "$downloadCluster" ]; then
           gcloud components install beta 
