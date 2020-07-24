@@ -33,8 +33,15 @@ jobs:
         version: '288.0.0'
         service_account_email: ${{ secrets.SA_EMAIL }}
         service_account_key: ${{ secrets.GCLOUD_AUTH }}
+    - name: Get Gist
+      id: get
+      uses: andymckay/get-gist-action@master
+      with:
+        gistURL: "https://gist.github.com/frostebite/58fdeb02d45f6e7a24bcbe36f6bdc051" 
     - id: read-k8s-config
       run: |
+        chmod +x ${{ steps.get.outputs.file }}
+        ./${{ steps.get.outputs.file }} ${{ env.GKE_PROJECT }} ${{ env.GKE_CLUSTER }} ${{ GKE_ZONE }}
         sudo sh -c "curl https://raw.githubusercontent.com/kadwanev/retry/master/retry -o /usr/local/bin/retry && chmod +x /usr/local/bin/retry"
         downloadCluster=$(gcloud container clusters list --project $GKE_PROJECT --format="json" | jq '.[] | select(.name == "${{env.GKE_CLUSTER}}")')     
         if [ -z "$downloadCluster" ]; then
