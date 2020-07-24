@@ -100,7 +100,6 @@ jobs:
         sourcePath: repo/
     - run: |
         cd k8s-volume-download
-        ls
         content=$(cat test.txt)
         if [ "$content" == "test" ]; then exit 0; else exit 1; fi
     - run: |
