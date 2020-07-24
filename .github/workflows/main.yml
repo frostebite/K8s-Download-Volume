@@ -99,7 +99,7 @@ jobs:
         volume: ${{ steps.read-k8s-config.outputs.PVC_ID }}
         sourcePath: repo/
     - run: |
-        cd k8s-volume-download
+        cd k8s-volume-download/output
         content=$(cat test.txt)
         if [ "$content" == "test" ]; then exit 0; else exit 1; fi
     - run: |

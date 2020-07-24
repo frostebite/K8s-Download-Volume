@@ -49,5 +49,6 @@ pods=$(kubectl get pods --selector=job-name=$DOWNLOAD_NAME --output=jsonpath='{.
 kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD/$4
 rm output.zip
+mv $PWD/$4/output/* $PWD/$4
 ls
 kubectl delete jobs/$DOWNLOAD_NAME
