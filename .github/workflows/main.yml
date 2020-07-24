@@ -52,11 +52,8 @@ jobs:
         gcloud container clusters get-credentials ${{env.GKE_CLUSTER}} --zone $GKE_ZONE --project $GKE_PROJECT
         # run a command to get access-token
         kubectl version
-        kubeConfig=$(cat ~/.kube/config | base64 -w0)
         PVC_ID=$(cat /proc/sys/kernel/random/uuid)
-        echo "::set-output name=kubeConfig::$kubeConfig"
         echo "::set-output name=PVC_ID::$PVC_ID"
-        echo "::add-mask::$kubeConfig"
         cat <<EOF | kubectl apply -f -
         apiVersion: v1
         kind: PersistentVolumeClaim
