@@ -42,8 +42,9 @@ kubectl wait --for=condition=ready pod -l job-name=$DOWNLOAD_NAME --timeout=$5s
 kubectl exec jobs/$DOWNLOAD_NAME -- ls /data/$3
 kubectl exec jobs/$DOWNLOAD_NAME -- apk update
 kubectl exec jobs/$DOWNLOAD_NAME -- apk add zip
-kubectl exec jobs/$DOWNLOAD_NAME -- zip -r -j output.zip /data/$3
-kubectl exec jobs/$DOWNLOAD_NAME -- stat /output.zip
+kubectl exec jobs/$DOWNLOAD_NAME -- mv /data/$3 /output
+kubectl exec jobs/$DOWNLOAD_NAME -- zip -r output.zip /output
+kubectl exec jobs/$DOWNLOAD_NAME -- stat output.zip
 pods=$(kubectl get pods --selector=job-name=$DOWNLOAD_NAME --output=jsonpath='{.items[*].metadata.name}')
 kubectl cp $pods:output.zip $PWD/output.zip
 unzip $PWD/output.zip -d $PWD/$4
